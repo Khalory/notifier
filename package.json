@@ -6,7 +6,7 @@
   "dependencies": {},
   "devDependencies": {},
   "scripts": {
-    "test": "nodejs notifier.js"
+    "test": "node notifier.js"
   },
   "repository": {
     "type": "git",
