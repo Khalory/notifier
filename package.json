@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "Collects data and sends notifications based on gathered inputs.",
   "main": "notifier.js",
-  "dependencies": {},
+  "dependencies": {
+    "google-auth-library": "^0.9.7",
+    "googleapis": "^2.1.7",
+    "sqlite3": "^3.1.1"
+  },
   "devDependencies": {},
   "scripts": {
     "test": "node notifier.js"

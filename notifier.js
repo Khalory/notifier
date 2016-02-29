@@ -1,4 +1,7 @@
 var aggregator = require('./aggregator.js')
+var db = require('./database.js')
 
-aggregator.aggregate((mes) => console.log('NOTIFY CALLBACK ' + mes),
-		(mes) => console.log('DB CALLBACK ' + mes))
+aggregator.aggregate((type, name, newData, mes)  => {
+	console.log('NOTIFY CALLBACK ' + mes)
+	db.updateCache(type, name, newData, mes)
+})
