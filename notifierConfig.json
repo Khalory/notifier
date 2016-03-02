@@ -1,0 +1,11 @@
+{
+	"webUpdate": [
+		{
+			"requestType": "https",
+			"siteName": "EntruceTranslations",
+			"hostname": "entruce.wordpress.com",
+			"selector": "article:nth-of-type(1) h1.entry-title",
+			"transform": "(text) => {console.log(text + ' => ' + text.substring(0, text.length-7)); return text.substring(0, text.length-7)}"
+		}
+	]
+}
