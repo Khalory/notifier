@@ -10,7 +10,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "node notifier.js"
+    "test": "node app.js"
   },
   "repository": {
     "type": "git",
