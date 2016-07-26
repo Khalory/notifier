@@ -4,6 +4,8 @@
   "description": "Collects data and sends notifications based on gathered inputs.",
   "main": "notifier.js",
   "dependencies": {
+    "cheerio": "^0.20.0",
+    "fb": "^1.0.2",
     "google-auth-library": "^0.9.7",
     "googleapis": "^2.1.7",
     "sqlite3": "^3.1.1"

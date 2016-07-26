@@ -1,7 +1,6 @@
 var http = require('http')
 var https = require('https')
-var select = require('html-select')
-var tokenize = require('html-tokenize')
+var cheerio = require('cheerio')
 var Readable = require('stream').Readable
 var diff = require('diff')
 var db = require('../database.js')
@@ -10,8 +9,11 @@ exports.register = (config, callback) => {
 	var requestType = config.requestType
 	var siteName = config.siteName
 	var hostname = config.hostname
-	var selector = config.selector	
+	var selector = config.selector
 	var transform = eval(config.transform)
+
+	if (transform == undefined)
+		transform = (data)=>{return data}
 
 	var checkUpdates = () => {
 		var reqFunc = http
@@ -43,34 +45,15 @@ exports.register = (config, callback) => {
 					}
 					var bodyString = body.join('')
 					var newData = ''
-					var s = select(selector, (e) => {
-						var strm = e.createReadStream()
-						strm.on('data', (row) => {
-							console.log('Got data!')
-							if (row[0] === 'open' || row[0] === 'close' || /^\s+$/.test(row[1].toString()))
-								return
-							newData += row[1].toString() + '\n'
-						})
-						strm.on('end', () => {
-							console.log(newData);
-							newData = transform(newData)
-						})
-					})
-					var dataStream = new Readable
-					dataStream.push(bodyString)
-					dataStream.push(null)
-					dataStream.pipe(tokenize()).pipe(s)
-					//console.log("Resuming stream")
-					s.resume()
 
-					s.on('end', () => {
-						console.log('tokenize ended: ' + newData)
-						var oldData = row.current
-
-						if (newData != oldData) {
-							callback('webUpdate', siteName, newData, '' + siteName + ' Updated!', 'Changed from: <div>' + oldData + '</div> to <div>' + newData + '</div>')
-						}
-					})
+					$ = cheerio.load(bodyString)
+					newData = $(selector).html()
+					newData = transform(newData)
+					var oldData = row.current
+					
+					if (newData != oldData) {
+						callback('webUpdate', siteName, newData, '' + siteName + ' Updated!', 'Changed from: <div>' + oldData + '</div> to <div>' + newData + '</div>')
+					}
 				})
 			})
 		}).end()
