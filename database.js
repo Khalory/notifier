@@ -17,5 +17,5 @@ exports.getCache = (type, name, callback) => {
 
 exports.addCache = (type, name, newData, mes) => {
 	db.run('INSERT INTO cache (type, name, current, message, update_time) '
-		 + 'VALUES (?, ?, ?, ?, ?);', [type, name, newData, mes, (new Date).getTime()])	
+		 + 'VALUES (?, ?, ?, ?, ?);', [type, name, newData, mes, (new Date).getTime()])
 }

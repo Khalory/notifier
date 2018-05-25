@@ -19,7 +19,7 @@ exports.register = (config, callback) => {
 		var reqFunc = http
 		if (requestType == 'https')
 			reqFunc = https
-		
+
 		var options = {
 			hostname: hostname,
 			agent: false
@@ -29,7 +29,7 @@ exports.register = (config, callback) => {
 			//console.log(options)
 		reqFunc.request(options, (res) => {
 			//console.log('Got status: ', res.statusCode)
-			
+
 			res.on('data', (chunk) => {
 				body.push(chunk.toString())
 			})
@@ -50,7 +50,7 @@ exports.register = (config, callback) => {
 					newData = $(selector).html()
 					newData = transform(newData)
 					var oldData = row.current
-					
+
 					if (newData != oldData) {
 						callback('webUpdate', siteName, newData, '' + siteName + ' Updated!', 'Changed from: <div>' + oldData + '</div> to <div>' + newData + '</div>')
 					}
@@ -61,7 +61,5 @@ exports.register = (config, callback) => {
 	}
 
 	setInterval(checkUpdates, 60000)
-	checkUpdates()	
+	checkUpdates()
 }
-
-
